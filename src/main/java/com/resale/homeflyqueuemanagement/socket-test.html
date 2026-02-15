@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Queue Simulation</title>
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        h1 { color: darkred; }
+        h2 { color: darkblue; margin-top: 40px; }
+        .section { border: 3px solid black; padding: 20px; margin-bottom: 40px; background: #f5f5f5; }
+        .socket-section { background: #e0f7fa; }
+        .rest-section { background: #fff3cd; }
+        button { margin: 5px; padding: 8px 14px; }
+        pre { background: black; color: lime; padding: 15px; max-height: 400px; overflow-y: auto; }
+        input { padding: 5px; margin-right: 5px; }
+    </style>
+</head>
+<body>
+
+<h1>QUEUE SIMULATION TEST PAGE</h1>
+
+<pre id="output"></pre>
+
+<div class="section rest-section">
+    <h2>🔶 REST API TESTING</h2>
+    <button onclick="getUsers()">Show Users</button>
+    <button onclick="getCalls()">Show Calls</button>
+    <button onclick="processQueue()">Process Queue</button>
+
+    <h3>Free Users (REST)</h3>
+    <button onclick="freeUser(10)">Free User 10</button>
+    <button onclick="freeUser(11)">Free User 11</button>
+    <button onclick="freeUser(12)">Free User 12</button>
+
+    <h3>Call Actions (REST)</h3>
+    <input id="callIdInput" placeholder="Call ID" />
+    <button onclick="acceptCall()">Accept Call</button>
+    <button onclick="endCall()">End Call</button>
+</div>
+
+<div class="section socket-section">
+    <h2>🔵 SOCKET.IO REALTIME ACTIONS</h2>
+
+    <h3>Connect with User ID</h3>
+    <input id="userIdInput" placeholder="Enter userId" />
+    <button onclick="connectSocket()">Connect Socket</button>
+    <button onclick="disconnectSocket()">Disconnect Socket</button>
+
+    <h3>Simulate Events (Socket)</h3>
+    <button onclick="socketAssign()">Simulate Assign</button>
+    <button onclick="socketRinging()">Simulate Ringing</button>
+    <button onclick="socketOnCall()">Simulate OnCall</button>
+    <button onclick="socketEnd()">Simulate End</button>
+</div>
+
+<script>
+    const output = document.getElementById('output');
+
+    function log(data) {
+        const text = typeof data === 'string' ? data : JSON.stringify(data, null, 2);
+        output.innerText += text + "\n";
+        output.scrollTop = output.scrollHeight; // auto-scroll
+        console.log(data); // also log in browser console
+    }
+
+    // ================= REST API FUNCTIONS =================
+    async function getUsers() {
+        const res = await fetch('http://localhost:9029/api/queue/users');
+        log(await res.json());
+    }
+
+    async function getCalls() {
+        const res = await fetch('http://localhost:9029/api/queue/calls');
+        log(await res.json());
+    }
+
+    async function processQueue() {
+        await fetch('http://localhost:9029/api/queue/process', { method: 'POST' });
+        log('Queue processed!');
+    }
+
+    async function freeUser(userId) {
+        await fetch(`http://localhost:9029/api/queue/freeUser/${userId}`, { method: 'POST' });
+        log(`User ${userId} freed!`);
+    }
+
+    async function acceptCall() {
+        const callId = document.getElementById("callIdInput").value;
+        if (!callId) return log("Enter a call ID first.");
+        await fetch(`http://localhost:9029/api/queue/accept/${callId}`, { method: 'POST' });
+        log(`Call ${callId} accepted (ON_CALL).`);
+    }
+
+    async function endCall() {
+        const callId = document.getElementById("callIdInput").value;
+        if (!callId) return log("Enter a call ID first.");
+        await fetch(`http://localhost:9029/api/queue/end/${callId}`, { method: 'POST' });
+        log(`Call ${callId} finished.`);
+    }
+
+    // ================= SOCKET.IO FUNCTIONS =================
+    let socket = null;
+
+    function connectSocket() {
+        if (socket && socket.connected) {
+            return log("Socket already connected!");
+        }
+
+        const userId = document.getElementById("userIdInput").value;
+        if (!userId) return log("Enter userId before connecting!");
+
+        socket = io("http://localhost:9092", {
+            transports: ["websocket"],
+            query: { userId },
+            reconnection: false // prevent automatic reconnect
+        });
+
+        log(`Connecting as userId=${userId}...`);
+
+        // ================= SOCKET EVENTS =================
+        socket.on("connect", () => log(`Socket Connected as userId=${userId}`));
+        socket.on("disconnect", (reason) => log(`Socket Disconnected: ${reason}`));
+
+        // Custom events
+        socket.on("ASSIGNED", data => log(["ASSIGNED EVENT", data]));
+        socket.on("RINGING", data => log(["RINGING EVENT", data]));
+        socket.on("ON_CALL", data => log(["ON_CALL EVENT", data]));
+        socket.on("ENDED", data => log(["ENDED EVENT", data]));
+
+        // 🔵 Listen for incoming calls assigned by the backend
+        socket.on("call:received", data => {
+            log(["CALL RECEIVED EVENT", data]);
+
+            // Optional: alert user
+            alert(`Incoming call!\nCall ID: ${data.callId}\nCustomer ID: ${data.customerId}`);
+        });
+    }
+
+    function disconnectSocket() {
+        if (socket) {
+            socket.disconnect();
+            log("Socket disconnected manually.");
+        }
+    }
+
+    // Manual simulation (client → server)
+    function socketAssign() { socket?.emit("ASSIGNED", { test: true, userId: document.getElementById("userIdInput").value }); }
+    function socketRinging() { socket?.emit("RINGING", { test: true }); }
+    function socketOnCall() { socket?.emit("ON_CALL", { test: true }); }
+    function socketEnd() { socket?.emit("ENDED", { test: true }); }
+
+</script>
+
+</body>
+</html>
