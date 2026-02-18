@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: resale-queue-app
+  namespace: dev-resale
 spec:
   replicas: 1
   selector:
@@ -12,6 +13,8 @@ spec:
       labels:
         app: resale-queue-app
     spec:
+      imagePullSecrets:
+        - name: icr-secret
       containers:
         - name: resale-queue-app
           image: de.icr.io/dev-registry/loveresale-queue-management-backend:latest
@@ -50,6 +53,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: resale-queue-service-cip
+  namespace: dev-resale
   labels:
     app: resale-queue-app
 spec:
