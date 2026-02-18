@@ -1,4 +1,4 @@
-package com.resale.homeflyqueuemanagement.config;
+package com.resale.resalequeuemanagement.config;
 
 import org.springframework.context.annotation.Configuration;
 import com.corundumstudio.socketio.SocketIOServer;

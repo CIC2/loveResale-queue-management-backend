@@ -1,15 +1,15 @@
-package com.resale.homeflyqueuemanagement.components.service;
+package com.resale.resalequeuemanagement.components.service;
 
 import com.corundumstudio.socketio.SocketIOServer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import com.resale.homeflyqueuemanagement.config.SocketEventHandler;
-import com.resale.homeflyqueuemanagement.model.CallStatus;
-import com.resale.homeflyqueuemanagement.model.QueueCallRequest;
-import com.resale.homeflyqueuemanagement.model.QueueUserStatus;
-import com.resale.homeflyqueuemanagement.repository.QueueCallRequestRepository;
-import com.resale.homeflyqueuemanagement.repository.QueueUserStatusRepository;
+import com.resale.resalequeuemanagement.config.SocketEventHandler;
+import com.resale.resalequeuemanagement.model.CallStatus;
+import com.resale.resalequeuemanagement.model.QueueCallRequest;
+import com.resale.resalequeuemanagement.model.QueueUserStatus;
+import com.resale.resalequeuemanagement.repository.QueueCallRequestRepository;
+import com.resale.resalequeuemanagement.repository.QueueUserStatusRepository;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -18,7 +18,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-import static com.resale.homeflyqueuemanagement.model.CallStatus.*;
+import static com.resale.resalequeuemanagement.model.CallStatus.*;
 
 @Slf4j
 @Service

@@ -1,12 +1,12 @@
-package com.resale.homeflyqueuemanagement.config;
+package com.resale.resalequeuemanagement.config;
 
 import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.SocketIOServer;
 import com.corundumstudio.socketio.listener.ConnectListener;
 import com.corundumstudio.socketio.listener.DisconnectListener;
 import org.springframework.stereotype.Component;
-import com.resale.homeflyqueuemanagement.components.dto.UserStatus;
-import com.resale.homeflyqueuemanagement.components.service.UserStatusService;
+import com.resale.resalequeuemanagement.components.dto.UserStatus;
+import com.resale.resalequeuemanagement.components.service.UserStatusService;
 
 import java.util.Collections;
 import java.util.HashMap;

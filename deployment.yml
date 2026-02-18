@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: tmg-vso-queue-app
+  name: resale-queue-app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: tmg-vso-queue-app
+      app: resale-queue-app
   template:
     metadata:
       labels:
-        app: tmg-vso-queue-app
+        app: resale-queue-app
     spec:
       containers:
-        - name: tmg-vso-queue-app
-          image: de.icr.io/cic-tmg-ecommerce/user-managment-backend-dev-app:638-k8-deployment-77980661-20210727153437
+        - name: resale-queue-app
+          image: de.icr.io/dev-registry/loveresale-queue-management-backend:latest
           args:
             - --spring.application.json=$(BINDING)
           env:
@@ -49,9 +49,9 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: tmg-vso-queue-service-cip
+  name: resale-queue-service-cip
   labels:
-    app: tmg-vso-queue-app
+    app: resale-queue-app
 spec:
   type: ClusterIP
   ports:
@@ -63,4 +63,4 @@ spec:
       port: 9092
       targetPort: 9092
   selector:
-    app: tmg-vso-queue-app
+    app: resale-queue-app

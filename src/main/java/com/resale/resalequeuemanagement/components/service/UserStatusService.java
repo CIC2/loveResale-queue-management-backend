@@ -1,7 +1,7 @@
-package com.resale.homeflyqueuemanagement.components.service;
+package com.resale.resalequeuemanagement.components.service;
 
 import org.springframework.stereotype.Service;
-import com.resale.homeflyqueuemanagement.components.dto.UserStatus;
+import com.resale.resalequeuemanagement.components.dto.UserStatus;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.Map;

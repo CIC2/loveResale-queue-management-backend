@@ -1,12 +1,12 @@
-package com.resale.homeflyqueuemanagement.components;
+package com.resale.resalequeuemanagement.components;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.resale.homeflyqueuemanagement.components.service.QueueService;
-import com.resale.homeflyqueuemanagement.model.QueueCallRequest;
-import com.resale.homeflyqueuemanagement.model.QueueUserStatus;
+import com.resale.resalequeuemanagement.components.service.QueueService;
+import com.resale.resalequeuemanagement.model.QueueCallRequest;
+import com.resale.resalequeuemanagement.model.QueueUserStatus;
 
 import java.util.List;
 

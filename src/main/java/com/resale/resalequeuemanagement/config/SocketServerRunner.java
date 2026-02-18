@@ -1,4 +1,4 @@
-package com.resale.homeflyqueuemanagement.config;
+package com.resale.resalequeuemanagement.config;
 
 import com.corundumstudio.socketio.SocketIOServer;
 import jakarta.annotation.PostConstruct;

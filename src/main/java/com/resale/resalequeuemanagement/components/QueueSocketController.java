@@ -1,9 +1,9 @@
-package com.resale.homeflyqueuemanagement.components;
+package com.resale.resalequeuemanagement.components;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.resale.homeflyqueuemanagement.components.service.QueueService;
+import com.resale.resalequeuemanagement.components.service.QueueService;
 
 @RestController
 @RequestMapping("/api/socket")

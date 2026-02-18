@@ -1,7 +1,7 @@
-package com.resale.homeflyqueuemanagement.repository;
+package com.resale.resalequeuemanagement.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import com.resale.homeflyqueuemanagement.model.QueueUserStatus;
+import com.resale.resalequeuemanagement.model.QueueUserStatus;
 
 import java.util.List;
 

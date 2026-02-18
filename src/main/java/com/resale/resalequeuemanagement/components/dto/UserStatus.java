@@ -1,4 +1,4 @@
-package com.resale.homeflyqueuemanagement.components.dto;
+package com.resale.resalequeuemanagement.components.dto;
 
 public enum UserStatus {
     ONLINE,

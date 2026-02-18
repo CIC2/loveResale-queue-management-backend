@@ -1,4 +1,4 @@
-package com.resale.homeflyqueuemanagement.model;
+package com.resale.resalequeuemanagement.model;
 
 public enum CallStatus {
     PENDING,

@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.example</groupId>
-    <artifactId>homefly-queue-management</artifactId>
+    <artifactId>loveresale-queue-management</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>homefly-queue-management</name>
     <description>homefly-queue-management</description>
